@@ -37,7 +37,6 @@ function Start() {
   for (var child in transform) {
     var typedChild : Transform = child as Transform;
     var blockTerrain = typedChild.GetComponent('TerrainBehaviour');
-    Debug.Log(blockTerrain);
     //if (!blockTerrain.canHover) {
       var yPos : float = typedChild.localPosition.y;
       for (var y = yPos; y > 0; y--) {

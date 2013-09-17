@@ -6,6 +6,7 @@ var gender : String;
 var zodiac : String;
 var level : int = 1;
 var experience : int = 0;
+var ct : int = 0;
 var currentJob : Transform;
 
 // Define hidden stats.
@@ -30,6 +31,11 @@ var supportSkill : Transform;
 var moveSkill : Transform;
 var statusEffects : Transform[];
 
+// Define menu vars.
+var menuOpen : boolean = false;
+var mainRect : Rect = Rect(10, 10, Screen.width - 20, 250);
+var subRect : Rect = Rect(Screen.width / 2, 20, Screen.width / 2, 230);
+
 function Start () {
   type = GetRandomType();
   gender = GetRandomGender(type);
@@ -45,6 +51,7 @@ function Start () {
 function Update () {
 
 }
+
 
 /**
  * Defines unit type options.
@@ -313,5 +320,47 @@ function GetStartingHitPoints(gender : String) {
 
       break;
   }
+}
+
+/**
+ * GUI functions.
+ ****************/
+function onMouseDown() {
+  Debug.Log('clicked');
+  menuToggle();
+}
+
+function OnGUI() {
+  Debug.Log(menuOpen);
+  if (menuOpen == true) {
+Debug.Log('menu opened');
+    mainRect = GUI.Window(0, mainRect, drawMain, '');
+    subRect = GUI.Window(1, subRect, drawSub, '');
+  }
+}
+
+function menuToggle(/*charMenu : GuiCharacterMenu*/) {
+  if (menuOpen == false) {
+    menuOpen = true;
+  }
+  else {
+    menuOpen = false;
+  }
+}
+
+function drawMain(winID : int) {
+  GUI.Label(Rect(55, 10, 40, 20), 'Lvl: ' + this.level);
+  GUI.Label(Rect(95, 10, 40, 20), 'Exp: ' + this.experience);
+  GUI.Label(Rect(35, 40, 90, 20), 'HP: ' + this.hp);
+  GUI.Label(Rect(35, 70, 90, 20), 'MP: ' + this.mp);
+  GUI.Label(Rect(35, 100, 90, 20), 'CT: ' + this.ct);  
+}
+
+function drawSub(winID : int) {
+  GUI.Label(Rect((Screen.width / 2) + 10, 10, 80, 20), this.name);
+  GUI.Label(Rect((Screen.width / 2) + 10, 40, 80, 20), currentJob.name);
+  GUI.Label(Rect((Screen.width / 2) + 5, 70, 30, 20), this.zodiac);
+  GUI.Label(Rect((Screen.width / 2) + 35, 70, 30, 20), 'Brave: ' + this.brave);
+  GUI.Label(Rect((Screen.width / 2) + 65, 70, 30, 20), 'Faith: ' + this.faith);
 }
 
